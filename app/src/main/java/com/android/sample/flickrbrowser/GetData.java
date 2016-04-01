@@ -1,4 +1,4 @@
-package com.android.sample.flikrbrowser;
+package com.android.sample.flickrbrowser;
 
 import android.os.AsyncTask;
 import android.util.Log;

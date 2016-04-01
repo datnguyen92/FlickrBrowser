@@ -5,30 +5,82 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.android.sample.flikrbrowser.MainActivity">
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
+    tools:context="com.android.sample.flickrbrowser.MainActivity">
 
     <include layout="@layout/content_main" />
 
-    <android.support.design.widget.FloatingActionButton
+    <!--<android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:src="@android:drawable/ic_dialog_email" />-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Your FAB implementation -->
+        <com.android.sample.flickrbrowser.views.Fab
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/custom_fab"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+        <!-- Overlay that dims the screen -->
+        <com.gordonwong.materialsheetfab.DimOverlayFrameLayout
+            android:id="@+id/overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- Circular reveal container for the sheet -->
+        <io.codetail.widget.RevealLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end|bottom"
+            android:orientation="vertical">
+
+            <!-- Sheet that contains your items -->
+            <LinearLayout
+                android:id="@+id/fab_sheet"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:orientation="vertical">
+                <android.support.v7.widget.CardView
+                    android:id="@+id/btnCamera"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dip"
+                    android:layout_marginBottom="1dip">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Camera"
+                    android:background="@color/colorPrimary"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"
+                    android:gravity="center"/>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:id="@+id/btnGallery"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dip">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Gallery"
+                        android:background="@color/colorPrimary"
+                        android:textColor="#ffffff"
+                        android:textSize="20sp"
+                        android:gravity="center"/>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </io.codetail.widget.RevealLinearLayout>
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

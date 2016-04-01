@@ -1,4 +1,4 @@
-package com.android.sample.flikrbrowser;
+package com.android.sample.flickrbrowser;
 
 import org.junit.Test;
 

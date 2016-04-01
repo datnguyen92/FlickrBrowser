@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.android.sample.flikrbrowser.LoginActivity"
+    tools:context="com.android.sample.flickrbrowser.LoginActivity"
     tools:showIn="@layout/activity_login">
 
     <LinearLayout
@@ -20,61 +21,29 @@
             android:layout_height="90dip"
             android:src="@mipmap/logo"
             android:layout_marginBottom="20dip"/>
-        <com.github.florent37.materialtextfield.MaterialTextField
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            app:mtf_image="@drawable/email"
-            >
-
-            <EditText
-                android:id="@+id/edtEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Email"
-                android:singleLine="true"
-                android:textColor="#333"
-                android:textColorHint="#666"
-                android:textSize="15sp" />
-
-        </com.github.florent37.materialtextfield.MaterialTextField>
-
-        <com.github.florent37.materialtextfield.MaterialTextField
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            app:mtf_image="@drawable/secure"
-            >
-
-            <EditText
-                android:id="@+id/edtPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Password"
-                android:singleLine="true"
-                android:password="true"
-                android:textColor="#333"
-                android:textColorHint="#666"
-                android:textSize="15sp" />
-
-        </com.github.florent37.materialtextfield.MaterialTextField>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:orientation="vertical"
             android:layout_marginTop="50dip">
-            <TextView
-                android:id="@+id/btnLogin"
+
+            <com.dd.processbutton.iml.ActionProcessButton
+                android:id="@+id/btnLogIn"
                 android:layout_width="300dip"
                 android:layout_height="wrap_content"
-                android:text="SIGN IN"
-                android:layout_gravity="bottom"
-                android:clickable="true"
+                android:padding="10dip"
+                android:text="LOG IN"
+                android:textColor="@android:color/white"
                 android:textSize="20sp"
-                android:paddingTop="12dip"
-                android:paddingBottom="15dip"
-                android:textColor="#ffffff"
-                android:background="@drawable/button"
-                android:gravity="center"/>
+                custom:pb_colorComplete="@color/colorPrimaryDark"
+                custom:pb_colorNormal="@color/colorPrimaryDark"
+                custom:pb_colorPressed="@color/colorPrimaryDarker"
+                custom:pb_textComplete="LOG IN"
+                custom:pb_textProgress="LOGGING IN..."
+                custom:pb_textError="LOG IN"
+                custom:pb_colorError="@android:color/white" />
         </LinearLayout>
 
     </LinearLayout>

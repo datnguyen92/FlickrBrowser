@@ -1,4 +1,4 @@
-package com.android.sample.flikrbrowser.models;
+package com.android.sample.flickrbrowser.models;
 
 /**
  * Created by datnguyen on 28/3/16.
