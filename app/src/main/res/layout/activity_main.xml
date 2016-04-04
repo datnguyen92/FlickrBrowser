@@ -7,6 +7,8 @@
     android:fitsSystemWindows="true"
     tools:context="com.android.sample.flickrbrowser.MainActivity">
 
+    <include layout="@layout/toolbar" />
+
     <include layout="@layout/content_main" />
 
     <!--<android.support.design.widget.FloatingActionButton
@@ -56,14 +58,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dip"
                     android:layout_marginBottom="1dip">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Camera"
-                    android:background="@color/colorPrimary"
-                    android:textColor="#ffffff"
-                    android:textSize="20sp"
-                    android:gravity="center"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Camera"
+                        android:background="@color/colorPrimary"
+                        android:textColor="#ffffff"
+                        android:textSize="20sp"
+                        android:gravity="center"/>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     android:id="@+id/btnGallery"

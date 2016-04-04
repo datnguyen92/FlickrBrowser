@@ -4,13 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_below="@+id/toolbar"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.android.sample.flickrbrowser.MainActivity"
     tools:showIn="@layout/activity_main">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/photoList"
-        android:scrollbars="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/photoList"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <com.zl.reik.dilatingdotsprogressbar.DilatingDotsProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:radius="10dp"
+        android:color="@color/colorPrimary"
+        android:layout_centerInParent="true"
+        custom:dd_numDots="3"
+        custom:dd_scaleMultiplier="1.5"
+        custom:dd_animationDuration="500"
+        custom:dd_horizontalSpacing="4dp"
+        />
 </RelativeLayout>

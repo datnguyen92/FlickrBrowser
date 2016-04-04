@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.android.sample.flickrbrowser.utils.FlickrUtils;
 import com.dd.processbutton.iml.ActionProcessButton;
@@ -29,6 +28,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /*
  * Steps need to be followed
+ *        - Sign request
  *        - Get the request token
  *        - Redirect to Flickr for user authentication
  *        - App callback to handle access token return from Flickr
@@ -66,7 +66,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String scheme = intent.getScheme();
         //The scheme should be same as the one in AndroidManifest file
         if (scheme != null && scheme.equals(FlickrUtils.APP_SCHEME)) {
-            Toast.makeText(context, scheme, Toast.LENGTH_SHORT).show();
             Uri uri = intent.getData();
             new GetAccessToken().execute(uri);
         } else {
@@ -181,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (oauth != null) {
                 completeLoading();
                 saveToken(oauth.getToken(), oauth.getUser());
-                activity.finish();
+                finish();
                 Intent MainActivity = new Intent(context, MainActivity.class);
                 startActivity(MainActivity);
             } else {
