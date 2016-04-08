@@ -6,11 +6,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.sample.flickrbrowser.utils.FlickrUtils;
+import com.android.sample.flickrbrowser.utils.NetworkUtils;
 import com.android.sample.flickrbrowser.utils.Utils;
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.googlecode.flickrjandroid.Flickr;
@@ -38,7 +39,9 @@ public class UploadActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Set up action bar
         setTitle("UPLOAD PHOTO");
+        displayBackButton();
 
         Bundle extras = getIntent().getExtras();
         if (extras!=null) {
@@ -65,7 +68,11 @@ public class UploadActivity extends BaseActivity {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Upload pressed", Toast.LENGTH_SHORT).show();
+                // Check network availability before upload image
+                if (!NetworkUtils.isNetworkAvailable(context)) {
+                    showNetworkNotice();
+                    return;
+                }
                 // Dismiss action due to empty photo path
                 if (photoPath.equals("")) {
                     return;
@@ -79,8 +86,33 @@ public class UploadActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                // go to previous activity
+                finish();
+                return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected int getLayoutResource() {
         return R.layout.activity_upload;
+    }
+
+    @Override
+    protected void onConnectedTask() {
+
+    }
+
+    @Override
+    protected void onDisconnectedTask() {
+
     }
 
     class UploadPhotoTask extends AsyncTask<String, Void, String> {

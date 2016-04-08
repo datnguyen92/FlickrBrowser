@@ -1,8 +1,10 @@
 package com.android.sample.flickrbrowser.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.util.Log;
 
@@ -21,6 +23,10 @@ public class Utils {
                 .setTitleText(title.equals("")?"Error Message":title)
                 .setContentText(msg)
                 .show();
+    }
+
+    public static boolean HasAdroidL() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
     public static String timeAgoFrom(long millis) {
@@ -69,6 +75,7 @@ public class Utils {
         return path.substring(path.lastIndexOf("/")+1, path.lastIndexOf("."));
     }
 
+    // Get Image path from provided Image Uri
     public static String getPathFromUri(Uri uri, Context context) {
         Uri filePathUri = uri;
         String path = "";
@@ -88,5 +95,10 @@ public class Utils {
         }
 
         return path;
+    }
+
+    // Convert dp to pixels
+    public static int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 }

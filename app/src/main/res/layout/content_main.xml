@@ -9,8 +9,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.android.sample.flickrbrowser.MainActivity"
     tools:showIn="@layout/activity_main">
-
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"

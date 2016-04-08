@@ -1,4 +1,4 @@
-package com.android.sample.flickrbrowser.views;
+package com.android.sample.flickrbrowser.ui;
 
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
@@ -87,6 +87,14 @@ public class Fab extends FloatingActionButton implements AnimatedFab {
             anim.setInterpolator(getInterpolator());
             startAnimation(anim);
         }
+        setVisibility(View.INVISIBLE);
+    }
+
+    /**
+     * Hides the FAB without animation.
+     */
+    public void hideNow() {
+        // This immediately hides the FAB
         setVisibility(View.INVISIBLE);
     }
 

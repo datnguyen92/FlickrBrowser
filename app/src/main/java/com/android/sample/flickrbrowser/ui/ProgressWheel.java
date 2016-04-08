@@ -1,4 +1,4 @@
-package com.android.sample.flickrbrowser.views;
+package com.android.sample.flickrbrowser.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;

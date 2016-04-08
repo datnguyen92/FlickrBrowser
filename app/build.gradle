@@ -35,6 +35,7 @@ dependencies {
     compile 'com.android.support:support-v4:23.2.1'
     compile 'com.github.justzak:dilatingdotsprogressbar:1.0.1'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile 'com.jakewharton:butterknife:7.0.1'
     compile('com.github.afollestad.material-dialogs:core:0.8.5.7@aar') {
         transitive = true
     }

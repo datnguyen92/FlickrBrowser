@@ -7,11 +7,11 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
 import com.android.sample.flickrbrowser.utils.FlickrUtils;
+import com.android.sample.flickrbrowser.utils.NetworkUtils;
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.google.gson.Gson;
 import com.googlecode.flickrjandroid.Flickr;
@@ -34,7 +34,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  *        - App callback to handle access token return from Flickr
  *        - Use the access token to retrieve private information such as user's photos
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
     final String LOG_TAG = LoginActivity.class.getSimpleName();
 
@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
         context = this;
         activity = this;
 
@@ -54,6 +53,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             btnLogIn.setMode(ActionProcessButton.Mode.ENDLESS);
             btnLogIn.setOnClickListener(this);
         }
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    protected void onConnectedTask() {
+
+    }
+
+    @Override
+    protected void onDisconnectedTask() {
+
     }
 
     @Override
@@ -77,6 +91,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnLogIn:
+                if (!NetworkUtils.isNetworkAvailable(context)) {
+                    showNetworkNotice();
+                    return;
+                }
                 new GetRequestTokenTask().execute();
                 break;
         }
@@ -180,9 +198,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (oauth != null) {
                 completeLoading();
                 saveToken(oauth.getToken(), oauth.getUser());
-                finish();
-                Intent MainActivity = new Intent(context, MainActivity.class);
-                startActivity(MainActivity);
+                activity.finish();
+                startActivity(new Intent(context, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                return;
             } else {
                 new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
                         .setTitleText("Login Error")

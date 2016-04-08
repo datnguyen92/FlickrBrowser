@@ -7,4 +7,6 @@
     <color name="colorAccentDark">#EB3D77</color>
 
     <color name="black_overlay">#66000000</color>
+    <color name="text_color_gray">#666666</color>
+    <color name="text_color_dark">#333333</color>
 </resources>

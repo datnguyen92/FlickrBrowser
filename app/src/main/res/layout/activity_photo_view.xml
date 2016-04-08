@@ -8,13 +8,12 @@
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
-    <ImageView
-        android:id="@+id/fullscreen_content"
+    <com.android.sample.flickrbrowser.ui.ZoomableImageView
+        android:id="@+id/ivPhotoFull"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/dummy"
-        android:scaleType="fitCenter"
-        android:keepScreenOn="true" />
+        android:transitionName="@string/photo_transition" />
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
@@ -22,25 +21,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
-
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/fullscreen_content_controls"
             style="?metaButtonBarStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             tools:ignore="UselessParent">
-
-            <Button
-                android:id="@+id/dummy_button"
-                android:layout_width="0dp"
+            <ImageView
+                android:id="@+id/btnClose"
+                android:layout_width="36dip"
+                android:layout_height="36dip"
+                android:layout_gravity="top|left"
+                android:layout_margin="10dip"
+                android:clickable="true"
+                android:src="@mipmap/ic_close_white"/>
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
-
-        </LinearLayout>
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
     </FrameLayout>
 
 </FrameLayout>

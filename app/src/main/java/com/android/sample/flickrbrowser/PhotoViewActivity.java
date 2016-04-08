@@ -1,18 +1,41 @@
 package com.android.sample.flickrbrowser;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+
+import com.android.sample.flickrbrowser.models.Gallery;
+import com.android.sample.flickrbrowser.models.Photo;
+import com.android.sample.flickrbrowser.ui.ZoomableImageView;
+import com.android.sample.flickrbrowser.utils.DrawableHolder;
+import com.google.gson.Gson;
+
+import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class PhotoViewActivity extends AppCompatActivity {
+public class PhotoViewActivity extends BaseActivity {
+
+    Context context;
+    Activity activity;
+
+    Photo photo;
+    Gallery gallery;
+
+    @Bind(R.id.ivPhotoFull) ZoomableImageView ivPhotoFull;
+    @Bind(R.id.btnClose) ImageView btnClose;
+
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -86,12 +109,14 @@ public class PhotoViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_photo_view);
+        //setContentView(R.layout.activity_photo_view);
+
+        context = this;
+        activity = this;
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
-
+        mContentView = findViewById(R.id.ivPhotoFull);
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +129,29 @@ public class PhotoViewActivity extends AppCompatActivity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        displayPhoto();
+        getPassingData();
+
+    }
+
+    @OnClick(R.id.btnClose)
+    void close() {
+        onBackPressed();
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_photo_view;
+    }
+
+    @Override
+    protected void onConnectedTask() {
+
+    }
+
+    @Override
+    protected void onDisconnectedTask() {
+
     }
 
     @Override
@@ -158,5 +205,24 @@ public class PhotoViewActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    void getPassingData() {
+        Bundle extras = getIntent().getExtras();
+        Gson gson = new Gson();
+        photo = gson.fromJson(extras.getString("photo"), Photo.class);
+        gallery = gson.fromJson(extras.getString("gallery"), Gallery.class);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    void displayPhoto() {
+        delayedHide(1000);
+        ivPhotoFull.setImageDrawable(DrawableHolder.get());/*
+        ivPhotoFull.setTranslationY(500);
+        ivPhotoFull.animate()
+                .translationY(0)
+                .setDuration(1000)
+                .setStartDelay(500)
+                .start();*/
     }
 }
