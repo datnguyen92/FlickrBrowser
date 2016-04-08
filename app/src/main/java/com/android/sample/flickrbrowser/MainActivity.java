@@ -78,6 +78,7 @@ public class MainActivity extends BaseActivity
     final String LOG_TAG = MainActivity.class.getSimpleName();
     final int REQUEST_TAKE_PHOTO = 101;
     final int REQUEST_PICK_PHOTO = 102;
+    final int REQUEST_UPLOAD = 103;
     // Number of items remaining before reach the end of list
     // Trigger load more items before these items are shown
     final int VISIBLE_THRESHOLD = 3;
@@ -267,7 +268,7 @@ public class MainActivity extends BaseActivity
                         galleryAddPhoto();
                         Intent UploadActivity = new Intent(context, UploadActivity.class);
                         UploadActivity.putExtra("path", mCurrentPhotoPath);
-                        startActivity(UploadActivity);
+                        startActivityForResult(UploadActivity, REQUEST_UPLOAD);
                         break;
                     case RESULT_CANCELED:
                         Toast.makeText(context, "Cancel photo capture", Toast.LENGTH_SHORT).show();
@@ -283,12 +284,23 @@ public class MainActivity extends BaseActivity
                         mCurrentPhotoPath = Utils.getPathFromUri(fileUri, context);
                         Intent UploadActivity = new Intent(context, UploadActivity.class);
                         UploadActivity.putExtra("path", mCurrentPhotoPath);
-                        startActivity(UploadActivity);
+                        startActivityForResult(UploadActivity, REQUEST_UPLOAD);
                         break;
                     case RESULT_CANCELED:
                         Toast.makeText(context, "No photo is selected", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case REQUEST_UPLOAD:
+                switch (resultCode) {
+                    case RESULT_OK:
+                        String result=data.getStringExtra("result");
+                        if (result.equals("1")) {
+                            onRefresh();
+                        } else if (result.equals("0")) {
+
+                        }
+                        break;
+                }
         }
 
     }

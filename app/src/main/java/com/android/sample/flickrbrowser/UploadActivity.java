@@ -1,6 +1,7 @@
 package com.android.sample.flickrbrowser;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.sample.flickrbrowser.utils.FlickrUtils;
 import com.android.sample.flickrbrowser.utils.NetworkUtils;
@@ -22,6 +24,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class UploadActivity extends BaseActivity {
 
     // variables
@@ -31,9 +36,11 @@ public class UploadActivity extends BaseActivity {
     final String LOG_TAG = UploadActivity.class.getSimpleName();
 
     // Activity's elements
-    ImageView ivPhoto;
-    MaterialEditText metTitle, metDescription, metTags;
-    ActionProcessButton btnUpload;
+    @Bind(R.id.ivPhoto) ImageView ivPhoto;
+    @Bind(R.id.metTitle) MaterialEditText metTitle;
+    @Bind(R.id.metDescription) MaterialEditText metDescription;
+    @Bind(R.id.metTags) MaterialEditText metTags;
+    @Bind(R.id.btnUpload) ActionProcessButton btnUpload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +56,6 @@ public class UploadActivity extends BaseActivity {
         }
 
         context = this;
-
-        ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
-        metTitle = (MaterialEditText) findViewById(R.id.metTitle);
-        metDescription = (MaterialEditText) findViewById(R.id.metDescription);
-        metTags = (MaterialEditText) findViewById(R.id.metTags);
-        btnUpload = (ActionProcessButton) findViewById(R.id.btnUpload);
 
         // This is the photo path
         // either come from the camera or the gallery
@@ -92,7 +93,7 @@ public class UploadActivity extends BaseActivity {
 
             case android.R.id.home:
                 // go to previous activity
-                finish();
+                onBackPressed();
                 return true;
 
         }
@@ -115,19 +116,59 @@ public class UploadActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("result", "0");
+        setResult(RESULT_CANCELED, resultIntent);
+        finish();
+    }
+
+    void toggleInputs() {
+        metTitle.setEnabled(!isUploading);
+        metDescription.setEnabled(!isUploading);
+        metTags.setEnabled(!isUploading);
+        btnUpload.setClickable(!isUploading);
+    }
+
     class UploadPhotoTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             isUploading = true;
+            btnUpload.setProgress(1);
+            toggleInputs();
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
+            String result =s;
+            btnUpload.setProgress(0);
             isUploading = false;
+            toggleInputs();
+
+            if (result==null || result.equals("")) {
+                new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Upload Error")
+                        .setContentText("Failed to upload photo. Please try again later")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismissWithAnimation();
+                            }
+                        })
+                        .show();
+                return;
+            }
+
+            Toast.makeText(context, "Photo is successfully uploaded", Toast.LENGTH_SHORT).show();
+
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("result", "1");
+            setResult(RESULT_OK, resultIntent);
+            finish();
         }
 
         @Override
