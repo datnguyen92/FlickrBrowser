@@ -13,8 +13,10 @@ Andorid app to support uploading photo to Flickr
  * [x] Infinite scrolling to load more photos
  * [x] Pull to refresh data
 
-**Nice to have:**
+**TO DO:**
 * [ ] User can upload photoList using service such as Picasa
+* [ ] Display detail info in photo viewer
+* [ ] Fix some minor bugs
 
 ### Walkthrough
 ![Video Walkthrough](RottenTomatoes.gif)
