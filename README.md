@@ -19,7 +19,7 @@ Andorid app to support uploading photo to Flickr
 * [ ] Fix some minor bugs
 
 ### Walkthrough
-![Video Walkthrough](RottenTomatoes.gif)
+![Video Walkthrough]()
 
 Third-party resources
 ---------
