@@ -33,8 +33,8 @@ Third-party resources
 *   'com.jakewharton:butterknife:7.0.1'
 *   'com.github.afollestad.material-dialogs:core:0.8.5.7@aar
 
-### Licnese
-* This is under MIT lincense
+### License
+* This is under MIT license
 
 Copyright (c) 2016
 
